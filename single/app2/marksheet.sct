@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>App1</title>
+</head>
+<body>
+<h2>Marksheet</h2>
+Roll Number: ${rollNumber}<br> 
+Physics: ${physics} <br>
+Chemistry: ${chemistry}<br> 
+Maths: ${maths} <br>
+Hindi: ${hindi} <br>
+English: ${english}<br>
+</body>
+</html>

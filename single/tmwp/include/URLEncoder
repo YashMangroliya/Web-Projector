@@ -1,0 +1,9 @@
+namespace tmwp
+{
+class URLEncoder
+{
+public:
+static void encode(char *data);
+static void decode(char *data);
+};
+}

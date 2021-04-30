@@ -1,0 +1,66 @@
+#include <map>
+#include<string.h>
+namespace tmwp
+{
+typedef struct _request
+{
+char *method;
+char *resource;
+char *mimeType;
+int dataCount;
+char **data;
+char isClientSideTechnologyResource;
+int clientSocketDescriptor;
+}REQUEST;
+
+struct cmp_str
+{
+   bool operator()(char const *a, char const *b) const
+   {
+      return strcmp(a, b) < 0;
+   }
+};
+class Response
+{
+private:
+int clientSocketDescriptor;
+bool flag;
+char *mimeType;
+public:
+Response(int);
+void setMimeType(const char* mimeType);
+void write(const char*);
+void close();
+};
+class Request
+{
+private:
+REQUEST *request;
+std::map<const char*,char*,cmp_str> dataMap;
+public:
+std::map<const char *,void (*)(Request &,Response &),cmp_str> urlMap;
+std::map<const char*,int,cmp_str> intForwardedDataMap;
+std::map<const char*,int,cmp_str> intDataToForwardMap;
+Request(REQUEST *request);
+char * getMethod();
+char * getResource();
+char * getMimeType();
+int getDataCount();
+char ** getData();
+char * get(const char *key);
+void setInt(const char *key,int data);
+int getInt(const char *key);
+void forward(const char*);
+};
+class TMWebProjector
+{
+private:
+int portNumber;
+std::map<char *,void (*)(Request &,Response &),cmp_str> urlMap;
+public:
+TMWebProjector(int portNumber);
+~TMWebProjector();
+void start();
+void onRequest(const char *,void (*ptrOnRequest)(Request &,Response &));
+};
+}
